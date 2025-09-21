@@ -11,17 +11,22 @@
             padding: 50px;
             background-image: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg');
             background-size: cover;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
         }
 
         h1 {
             color: #d81b60;
-            font-size: 3em;
+            font-size: 2.2em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             animation: pulse 1.5s infinite;
         }
 
         .buttons {
             margin-top: 50px;
+            position: relative;
+            z-index: 10;
         }
 
         .yes-btn {
@@ -52,7 +57,11 @@
             cursor: pointer;
             transition: all 0.1s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: absolute;
+            position: fixed;
+            /* Always on screen */
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .hidden {
@@ -123,11 +132,25 @@
                 opacity: 0;
             }
         }
+
+        /* Small screen fix */
+        @media (max-width: 600px) {
+
+            .yes-btn,
+            .no-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <h1>Will you be my Valentine? URUBI?</h1>
+    <h1>Will you be my Valentine? 💖</h1>
     <div class="buttons">
         <button class="yes-btn" onclick="showResponse()">YES! ❤️</button>
         <button class="no-btn" id="noBtn">No 😢</button>
@@ -146,13 +169,19 @@
             document.getElementById('noBtn').style.display = 'none';
         }
 
-        document.getElementById('noBtn').addEventListener('mouseover', function () {
-            var btn = this;
-            var x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            var y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        });
+        const noBtn = document.getElementById('noBtn');
+
+        function moveButton() {
+            var x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            var y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // For PC
+        noBtn.addEventListener('mouseover', moveButton);
+        // For Mobile
+        noBtn.addEventListener('touchstart', moveButton);
 
         function createHearts() {
             const heartsContainer = document.getElementById('hearts');
