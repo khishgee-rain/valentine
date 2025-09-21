@@ -171,9 +171,10 @@
 
         const noBtn = document.getElementById('noBtn');
 
-        function moveButton() {
-            var x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            var y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+       function moveButton() {
+            var padding = 50; // дэлгэцийн ирмэгээс холдуулна
+            var x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+            var y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
@@ -181,7 +182,10 @@
         // For PC
         noBtn.addEventListener('mouseover', moveButton);
         // For Mobile
-        noBtn.addEventListener('touchstart', moveButton);
+    noBtn.addEventListener('touchstart', function (event) {
+        event.preventDefault();
+        moveButton();
+    });
 
         function createHearts() {
             const heartsContainer = document.getElementById('hearts');
